@@ -1,22 +1,24 @@
 <template>
   <!-- <div class="container"> -->
-  <table class="table text-center">
+  <table class="table text-center align-middle">
     <thead>
       <tr>
-        <th width="120">分類</th>
+        <th>分類</th>
+        <th>產品圖片</th>
         <th>產品名稱</th>
-        <th width="120">原價</th>
-        <th width="120">售價</th>
+        <th>原價</th>
+        <th>售價</th>
         <th width="100">是否啟用</th>
         <th width="120">編輯</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(item, index) in products" :key="index">
-        <td>{{ item.category }}</td>
+        <td class="my-auto">{{ item.category }}</td>
+        <td><img style="width: 50px" :src="item.imageUrl" alt="image" /></td>
         <td>{{ item.title }}</td>
-        <td class="text-end">{{ item.origin_price }}</td>
-        <td class="text-end">{{ item.price }}</td>
+        <td class="text-center">{{ item.origin_price }}</td>
+        <td class="text-center">{{ item.price }}</td>
         <td>
           <span class="text-success" v-if="item.is_enabled">啟用</span>
           <span v-else>未啟用</span>
@@ -26,14 +28,14 @@
             <button
               type="button"
               class="btn btn-outline-primary btn-sm"
-              @click="openModal('edit', item)"
+              @click="openEditModal('edit', item)"
             >
               編輯
             </button>
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              @click="openModal('delete', item)"
+              @click="openDeleteModal(item)"
             >
               刪除
             </button>
@@ -42,36 +44,30 @@
       </tr>
     </tbody>
   </table>
-  <div class="text-end mt-auto">
-    <button class="btn btn-primary" @click="openModal('create')">建立新的產品</button>
+  <div class="text-end mt-auto d-flex align-items-center">
+    <!-- pagination -->
+    <PaginationComponent :pagination="pagination" @current-page="readProducts" />
+    <button @click="openEditModal('create')" class="btn btn-primary ms-auto">建立新的產品</button>
   </div>
-  <!-- Pagination -->
-  <paginationComponent
-    :index="index"
-    :pagination="pagination"
-    @change-page="readProducts"
-  ></paginationComponent>
-  <!-- Pagination -->
-  <!-- </div> -->
   <!-- Modal -->
-  <!-- Create and Edit Page -->
-  <editProductComponent
-    :temp-Product="tempProduct"
-    :is-Create-Modal="isCreateModal"
-    @read-Products="readProducts"
-    @open-modal="(e) => (openEditModal = e)"
-  ></editProductComponent>
-  <!-- Delete Page -->
-  <deleteProductComponent
-    :temp-Product="tempProduct"
-    @read-Products="readProducts"
-    @open-modal="(e) => (openDeleteModal = e)"
-  >
-  </deleteProductComponent>
-  <!-- Modal -->
+  <EditModalComponent
+    @edit-modal="(modal) => (editModal = modal)"
+    :tempProduct="tempProduct"
+    :is-create-modal="isCreateModal"
+    @read-products="readProducts"
+  />
+  <DeleteModalComponent
+    :tempProduct="tempProduct"
+    @delete-modal="(modal) => (deleteModal = modal)"
+    @read-products="readProducts"
+  />
 </template>
 
 <script>
+import PaginationComponent from '@/components/PaginationComponent.vue';
+import EditModalComponent from '@/components/EditModalComponent.vue';
+import DeleteModalComponent from '@/components/DeleteModalComponent.vue';
+
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env;
 export default {
   data() {
@@ -80,35 +76,28 @@ export default {
       tempProduct: {},
       isCreateModal: false,
       pagination: {},
-      openEditModal: null,
-      openDeleteModal: null,
+      editModal: null,
+      deleteModal: null,
     };
   },
   methods: {
-    // 1. 設定開啟新增、編輯、刪除頁面
-    openModal(mode, item = {}) {
+    openDeleteModal(item) {
+      this.tempProduct = item;
+      this.deleteModal.show();
+    },
+    // 設定開啟新增、編輯、刪除頁面
+    openEditModal(mode, item = {}) {
       this.tempProduct = JSON.parse(JSON.stringify(item));
-      //   console.log(this.tempProduct);
-      // 刪除的 modal
-      if (mode === 'delete') {
-        this.openDeleteModal();
-        return;
-      }
       // 編輯和新增的 modal
       if (mode === 'edit') {
         this.isCreateModal = false;
       } else {
         this.isCreateModal = true;
       }
-
-      // 沒有 imagesUrl 會造成 html 中使用 push 出錯
-      if (!this.tempProduct.imagesUrl) {
-        this.tempProduct.imagesUrl = [];
-      }
-      this.openEditModal();
+      this.editModal.show();
     },
-    //   3. 讀取產品
-    readProducts(currentPage) {
+    // 讀取產品
+    readProducts(currentPage = 1) {
       this.$http
         .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/products?page=${currentPage}`)
         .then((res) => {
@@ -120,25 +109,10 @@ export default {
           alert('讀取資料失敗');
         });
     },
-    //   6.確認登入狀態
-    // checkLogin() {
-    //   var token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-    //   this.$http.defaults.headers.common['Authorization'] = token;
-    //   this.$http
-    //     .post(`${VITE_APP_API_URL}/api/user/check`, {})
-    //     .then((res) => {
-    //       return;
-    //     })
-    //     .catch((err) => {
-    //       console.error(err.message);
-    //       alert('請重新登入');
-    //       window.location = './week4_login.html';
-    //     });
-    // },
   },
+  components: { PaginationComponent, EditModalComponent, DeleteModalComponent },
   mounted() {
-    // this.checkLogin();
-    this.readProducts(1);
+    this.readProducts();
   },
 };
 </script>
