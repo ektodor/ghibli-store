@@ -1,20 +1,23 @@
 import './assets/all.scss';
 
-import 'bootstrap';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { LoadingPlugin } from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/css/index.css';
-import axios from 'axios';
-import VueAxios from 'vue-axios';
 
 // 外部
+import 'bootstrap';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 // eslint-disable-next-line object-curly-newline
 import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate';
+
 import * as VeeValidateRules from '@vee-validate/rules';
 import * as VeeValidateI18n from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
+import 'vue-loading-overlay/dist/css/index.css';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 // 內部
 import App from './App.vue';
 import router from './router';
@@ -40,5 +43,5 @@ VeeValidateI18n.setLocale('zh_TW');
 app.use(router);
 app.use(LoadingPlugin);
 app.use(VueAxios, axios);
-
+app.component('VueDatePicker', VueDatePicker);
 app.mount('#app');

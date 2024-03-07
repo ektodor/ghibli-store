@@ -107,12 +107,12 @@ export default {
   },
   updated() {
     // 每切換頁面，先確認 token 是否錯誤或過期
-    this.checkLogin();
+    // this.checkLogin();
     console.log('updated');
   },
   created() {
     // 每切換頁面，先確認 token 是否錯誤或過期
-    this.checkLogin();
+    // this.checkLogin();
     console.log('created');
   },
 };
