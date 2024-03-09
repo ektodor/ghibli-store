@@ -21,41 +21,13 @@
           ></button>
         </div>
         <div class="modal-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
-          </table>
+          <p>確定要刪除該項目?</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
             取消
           </button>
-          <button type="button" class="btn btn-danger">更新</button>
+          <button type="button" class="btn btn-danger" @click="deleteItem">刪除</button>
         </div>
       </div>
     </div>
@@ -71,14 +43,15 @@ export default {
       modal: null,
     };
   },
-  props: ['tempProduct'],
-  emits: ['delete-modal', 'read-products'],
+  props: ['url'],
+  emits: ['delete-modal', 'read-data'],
   methods: {
-    deletePrdouct() {
+    deleteItem() {
       this.$http
-        .delete(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/product/${this.tempProduct.id}`)
-        .then(() => {
-          this.$emit('read-products');
+        .delete(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/${this.url}`)
+        .then((res) => {
+          console.log(res.data);
+          this.$emit('read-data');
           this.modal.hide();
         })
         .catch((error) => {

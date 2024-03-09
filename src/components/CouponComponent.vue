@@ -1,5 +1,5 @@
 <template>
-  <v-form @submit="isCreateModal ? createCoupon() : updateCoupon()" v-slot="{ errors }">
+  <v-form @submit="isCreateCoupon ? createCoupon() : updateCoupon()" v-slot="{ errors }">
     <div
       ref="modal"
       class="modal fade"
@@ -101,6 +101,9 @@
 
 <script>
 import { Modal } from 'bootstrap';
+import { timestampToTwTime, twTimeToTimestamp } from '@/plugin/utils';
+
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env;
 
 export default {
   data() {
@@ -116,25 +119,45 @@ export default {
     tempCoupon() {
       this.coupon = JSON.parse(JSON.stringify(this.tempCoupon));
       this.isCreateCoupon = !(Object.keys(this.coupon).length > 0);
-      console.log(this.coupon.due_date);
       this.dateFormat = this.isCreateCoupon
-        ? this.convertTime(this.coupon.due_date)
-        : this.convertTime(new Date().setDate(new Date().getDate() + 7) / 1000);
+        ? this.timestampToTwTime(new Date().setDate(new Date().getDate() + 7) / 1000)
+        : this.timestampToTwTime(this.coupon.due_date);
+      this.coupon.is_enabled = this.isCreateCoupon ? 0 : this.coupon.is_enabled;
     },
     dateFormat(newValue) {
-      this.coupon.due_date = new Date(newValue).getTime() / 1000;
+      this.coupon.due_date = this.twTimeToTimestamp(newValue);
     },
   },
   methods: {
-    convertTime(timestamp) {
-      console.log(timestamp);
-      return new Date(timestamp * 1000).toLocaleString('zh-TW', { hour12: false });
-    },
+    timestampToTwTime,
+    twTimeToTimestamp,
     createCoupon() {
-      console.log(this.coupon);
+      this.$http
+        .post(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupon`, {
+          data: this.coupon,
+        })
+        .then(() => {
+          this.$emit('read-coupons');
+          this.modal.hide();
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     },
     updateCoupon() {
-      console.log(this.coupon);
+      const data = { ...this.coupon };
+      delete data.id;
+      this.$http
+        .put(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupon/${this.coupon.id}`, {
+          data,
+        })
+        .then(() => {
+          this.$emit('read-coupons');
+          this.modal.hide();
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     },
   },
   mounted() {

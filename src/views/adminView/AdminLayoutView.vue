@@ -87,6 +87,7 @@
 
 <script>
 const { VITE_APP_API_URL } = import.meta.env;
+
 export default {
   methods: {
     checkLogin() {
@@ -112,7 +113,7 @@ export default {
   },
   created() {
     // 每切換頁面，先確認 token 是否錯誤或過期
-    // this.checkLogin();
+    this.checkLogin();
     console.log('created');
   },
 };

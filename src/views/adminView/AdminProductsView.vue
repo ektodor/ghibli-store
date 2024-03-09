@@ -56,10 +56,11 @@
     :is-create-modal="isCreateModal"
     @read-products="readProducts"
   />
+
   <DeleteModalComponent
-    :tempProduct="tempProduct"
+    :url="`product/${tempProduct.id}`"
     @delete-modal="(modal) => (deleteModal = modal)"
-    @read-products="readProducts"
+    @read-data="readProducts"
   />
 </template>
 
