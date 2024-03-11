@@ -82,7 +82,7 @@ export default {
   methods: {
     timestampToTwTime,
     openCouponModal(item = {}) {
-      this.tempCoupon = item;
+      this.tempCoupon = JSON.parse(JSON.stringify(item));
       this.couponModal.show();
     },
     readCoupons(currentPage = 1) {
@@ -91,13 +91,14 @@ export default {
         .then((res) => {
           this.coupons = res.data.coupons;
           this.pagination = res.data.pagination;
+          console.log(this.coupons);
         })
         .catch((err) => {
           console.log(err.message);
         });
     },
     openDeleteModal(item) {
-      this.tempCoupon = item;
+      this.tempCoupon = JSON.parse(JSON.stringify(item));
       this.deleteModal.show();
     },
   },

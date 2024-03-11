@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     openDeleteModal(item) {
-      this.tempProduct = item;
+      this.tempProduct = JSON.parse(JSON.stringify(item));
       this.deleteModal.show();
     },
     // 設定開啟新增、編輯、刪除頁面

@@ -23,19 +23,15 @@
           <td>
             <div class="btn-group">
               <button
+                data-bs-toggle="modal"
+                data-bs-target="#editOrderModal"
                 type="button"
                 class="btn btn-outline-primary btn-sm"
-                @click="openEditModal('edit', item)"
+                @click="openEditModal(item)"
               >
                 編輯
               </button>
-              <button
-                type="button"
-                class="btn btn-outline-danger btn-sm"
-                @click="openDeleteModal(item)"
-              >
-                刪除
-              </button>
+              <button type="button" class="btn btn-outline-danger btn-sm">刪除</button>
             </div>
           </td>
         </tr>
@@ -47,40 +43,120 @@
     <PaginationComponent :pagination="pagination" @current-page="readProducts" />
   </div>
   <!-- Modal -->
-  <div
-    id="editOrderModal"
-    ref="editOrderModal"
-    class="modal fade"
-    tabindex="-1"
-    aria-labelledby="editOrderModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content border-0">
-        <div class="modal-header bg-danger text-white">
-          <h5 id="editOrderModalLabel" class="modal-title">
-            <span>編輯訂單</span>
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          是否刪除
-          <strong class="text-danger"></strong> 商品(刪除後將無法恢復)。
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            取消
-          </button>
-          <button type="button" class="btn btn-danger" @click="deletePrdouct">確認刪除</button>
+  <v-form>
+    <div
+      id="editOrderModal"
+      ref="editOrderModal"
+      class="modal fade"
+      tabindex="-1"
+      aria-labelledby="editOrderModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content border-0">
+          <div class="modal-header bg-secondary text-white">
+            <h5 id="editOrderModalLabel" class="modal-title">
+              <span>編輯訂單</span>
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="mb-3 col-6">
+                <label for="mame" class="form-label">姓名</label>
+                <input
+                  :value="tempOrder.user.name"
+                  v-modal="tempOrder.user.name"
+                  type="text"
+                  class="form-control"
+                  id="mame"
+                />
+              </div>
+              <div class="mb-3 col-6">
+                <label for="email" class="form-label">信箱</label>
+                <input
+                  :value="tempOrder.user.email"
+                  v-modal="tempOrder.user.email"
+                  type="email"
+                  class="form-control"
+                  id="email"
+                />
+              </div>
+              <div class="mb-3 col-6">
+                <label for="tel" class="form-label">電話</label>
+                <input
+                  :value="tempOrder.user.tel"
+                  v-modal="tempOrder.user.tel"
+                  type="tel"
+                  class="form-control"
+                  id="tel"
+                />
+              </div>
+              <div class="mb-3 col-6">
+                <label for="address" class="form-label">地址</label>
+                <input
+                  :value="tempOrder.user.address"
+                  v-modal="tempOrder.user.address"
+                  type="text"
+                  class="form-control"
+                  id="address"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">留言</label>
+                <textarea
+                  class="form-control"
+                  name="message"
+                  id="message"
+                  :value="tempOrder.message"
+                  v-bind="tempOrder.message"
+                ></textarea>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-middle text-center">
+                <thead>
+                  <tr>
+                    <th scope="col" style="min-width: 100px">商品名稱</th>
+                    <th scope="col" style="min-width: 100px">商品圖片</th>
+                    <th scope="col" style="min-width: 100px">數量</th>
+                    <th scope="col" style="min-width: 100px"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, key) in tempOrder.products" :key="key">
+                    <td scope="row">{{ item.product.title }}</td>
+                    <td>
+                      <img style="max-height: 100px" :src="item.product.imageUrl" alt="img" />
+                    </td>
+                    <td><input class="form-control" type="number" v-model="item.qty" /></td>
+                    <td><button type="button" class="btn btn-danger">刪除</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="is_paid" />
+              <label class="form-check-label" for="is_paid">是否已付費</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              取消
+            </button>
+            <button type="button" class="btn text-dark btn-success" @click="deletePrdouct">
+              更新
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </v-form>
 </template>
 
 <script>
@@ -297,10 +373,17 @@ export default {
     return {
       orders: data.orders,
       pagination: data.pagination,
+      tempOrder: {
+        user: {},
+        products: {},
+      },
     };
   },
   components: { PaginationComponent },
   methods: {
+    openEditModal(item) {
+      this.tempOrder = JSON.parse(JSON.stringify(item));
+    },
     timeFormat(timestamp) {
       return new Date(timestamp * 1000).toLocaleString('zh-TW');
     },
