@@ -9,7 +9,7 @@
           <div class="col-10">
             <div class="row justify-content-end">
               <div class="col-auto ms-auto">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" @click="logout">
                   <i class="bi bi-box-arrow-right"></i>
                   登出
                 </button>
@@ -90,31 +90,20 @@ const { VITE_APP_API_URL } = import.meta.env;
 
 export default {
   methods: {
-    checkLogin() {
+    logout() {
       // 確認登入狀態
       // no-useless-escape
       // eslint-disable-next-line no-useless-escape
-      const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-      this.$http.defaults.headers.common.Authorization = token;
       this.$http
-        .post(`${VITE_APP_API_URL}/api/user/check`, {})
-        .then(() => {})
-        .catch((err) => {
-          console.error(err.message);
-          alert('請重新登入');
-          // window.location = './week4_login.html';
+        .post(`${VITE_APP_API_URL}/logout`, {})
+        .then(() => {
+          document.cookie = 'token=; expired=;';
+          this.$router.push('/');
+        })
+        .catch(() => {
+          alert('請重新登出');
         });
     },
-  },
-  updated() {
-    // 每切換頁面，先確認 token 是否錯誤或過期
-    // this.checkLogin();
-    console.log('updated');
-  },
-  created() {
-    // 每切換頁面，先確認 token 是否錯誤或過期
-    this.checkLogin();
-    console.log('created');
   },
 };
 </script>

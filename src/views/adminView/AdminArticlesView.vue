@@ -104,11 +104,13 @@ export default {
       this.deleteModal.show();
     },
     readArticles(page = 1) {
+      const loading = this.$loading.show();
       this.$http
         .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/articles?page=${page}`)
         .then((res) => {
           this.articles = res.data.articles;
           this.pagination = res.data.pagination;
+          loading.hide();
         })
         .catch((err) => {
           console.log(err.message);
@@ -120,7 +122,6 @@ export default {
         .then((res) => {
           this.coupons = res.data.coupons;
           this.pagination = res.data.pagination;
-          console.log(this.coupons);
         })
         .catch((err) => {
           console.log(err.message);

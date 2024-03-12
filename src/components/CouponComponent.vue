@@ -8,9 +8,9 @@
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header bg-secondary">
             <h1 class="modal-title fs-5" id="exampleModalLabel">
               {{ isCreateCoupon ? '新增優惠卷' : '編輯優惠卷' }}
             </h1>

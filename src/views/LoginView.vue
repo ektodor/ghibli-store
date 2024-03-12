@@ -82,6 +82,7 @@ export default {
           }
           const { token, expired } = res.data;
           document.cookie = `token=${token};expired=${new Date(expired)}`;
+          this.$http.defaults.headers.common.Authorization = token;
           this.$router.push('/admin/products');
         })
         .catch(() => {

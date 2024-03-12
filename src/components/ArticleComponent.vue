@@ -8,9 +8,9 @@
       aria-labelledby="articleModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header bg-secondary">
             <h1 class="modal-title fs-5" id="articleModalLabel">
               {{ isCreateArticle ? '新增文章' : '編輯文章' }}
             </h1>

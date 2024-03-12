@@ -86,12 +86,13 @@ export default {
       this.couponModal.show();
     },
     readCoupons(currentPage = 1) {
+      const loading = this.$loading.show();
       this.$http
         .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/coupons?page=${currentPage}`)
         .then((res) => {
           this.coupons = res.data.coupons;
           this.pagination = res.data.pagination;
-          console.log(this.coupons);
+          loading.hide();
         })
         .catch((err) => {
           console.log(err.message);

@@ -99,11 +99,13 @@ export default {
     },
     // 讀取產品
     readProducts(currentPage = 1) {
+      const loading = this.$loading.show();
       this.$http
         .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/products?page=${currentPage}`)
         .then((res) => {
           this.products = res.data.products;
           this.pagination = res.data.pagination;
+          loading.hide();
         })
         .catch((err) => {
           console.error(err.message);
