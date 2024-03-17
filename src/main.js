@@ -44,4 +44,5 @@ app.use(router);
 app.use(LoadingPlugin);
 app.use(VueAxios, axios);
 app.component('VueDatePicker', VueDatePicker);
+
 app.mount('#app');

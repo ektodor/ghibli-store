@@ -19,6 +19,25 @@ const routes = [
         name: 'About',
         component: () => import('../views/frontView/AboutView.vue'),
       },
+      {
+        path: 'carts',
+        component: () => import('../views/frontView/CartsView.vue'),
+      },
+      {
+        path: 'products',
+        component: () => import('../views/frontView/ProductsView.vue'),
+      },
+      {
+        path: 'news',
+        component: () => import('../views/frontView/NewsView.vue'),
+      },
+      {
+        path: 'news/:id',
+        component: () => import('../views/frontView/NewsDetailView.vue'),
+        props: (route) => ({
+          id: route.params.id,
+        }),
+      },
     ],
   },
   {
