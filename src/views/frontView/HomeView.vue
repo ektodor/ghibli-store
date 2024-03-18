@@ -23,90 +23,70 @@
       >
         <router-link
           to="/products"
-          class="icon-link w-50 h-50 icon-link-hover d-flex flex-column rounded-circle justify-content-center btn btn-warning d-flex align-items-center shadow"
+          class="icon-link w-50 h-50 icon-link-hover d-flex flex-column rounded-5 justify-content-center btn btn-outline-primary border-3 d-flex align-items-center shadow"
           style="
             /* min-width: 300px;
             height: 300px; */
             --bs-icon-link-transform: translate3d(0, -0.5rem, 0);
           "
         >
-          <h3>強檔片單</h3>
-          <i class="bi bi-hand-index-thumb fs-3"></i>
+          <h2><i class="bi bi-film m-2"></i>強檔片單</h2>
+          <i class="bi bi-hand-index-thumb fs-1"></i>
         </router-link>
 
         <router-link
           to="/news"
-          class="icon-link icon-link-hover w-50 h-50 d-flex flex-column rounded-circle justify-content-center btn btn-warning d-flex align-items-center shadow"
+          class="icon-link icon-link-hover w-50 h-50 d-flex flex-column rounded-5 justify-content-center btn btn-outline-primary border-3 d-flex align-items-center shadow"
           style="--bs-icon-link-transform: translate3d(0, -0.5rem, 0)"
         >
-          <h3>活動消息</h3>
-          <i class="bi bi-hand-index-thumb fs-3"></i>
+          <h2><i class="bi bi-fire mx-2"></i>活動消息</h2>
+          <i class="bi bi-hand-index-thumb fs-1"></i>
         </router-link>
 
         <router-link
           to="/about"
-          class="icon-link icon-link-hover w-50 h-50 d-flex flex-column rounded-circle justify-content-center btn btn-warning d-flex align-items-center shadow"
+          class="icon-link icon-link-hover w-50 h-50 d-flex flex-column rounded-5 justify-content-center btn btn-outline-primary border-3 d-flex align-items-center shadow"
           style="--bs-icon-link-transform: translate3d(0, -0.5rem, 0)"
         >
-          <h3>關於我們</h3>
-          <i class="bi bi-hand-index-thumb fs-3"></i>
+          <h2>關於我們</h2>
+          <i class="bi bi-hand-index-thumb fs-1"></i>
         </router-link>
       </div>
     </div>
-    <div class="vh-100 bg-success py-3" id="video">
-      <div class="container-lg">
-        <h2>最新片單</h2>
-        <div id="carouselExampleCaptions" class="carousel slide">
+    <div class="vh-100 bg-success py-3" id="products">
+      <div class="container-lg h-100">
+        <h2 class="mt-4"><i class="bi bi-film mx-2"></i>強檔片單</h2>
+
+        <div id="carouselExampleCaptions" class="carousel slide mt-4 border border-3 rounded-5">
           <div class="carousel-indicators">
             <button
+              v-for="(item, index) in products"
+              :key="item"
               type="button"
               data-bs-target="#carouselExampleCaptions"
-              data-bs-slide-to="0"
-              class="active"
+              :class="{ active: index == 0 }"
+              class="text-bg-primary"
               aria-current="true"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide-to="1"
-              aria-label="Slide 2"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide-to="2"
-              aria-label="Slide 3"
+              :data-bs-slide-to="index"
+              :aria-label="`Slide ${index + 1}`"
             ></button>
           </div>
           <div class="carousel-inner">
-            <div class="carousel-item active">
+            <div
+              class="carousel-item"
+              v-for="(item, index) in products"
+              :key="item"
+              :class="{ active: index == 0 }"
+            >
               <img
-                src="https://images.unsplash.com/photo-1661174585122-83a2909163ad?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                class="d-block img-fluid w-100"
-                alt="..."
+                :src="item?.imagesUrl[0]"
+                class="d-block img-fluid object-fit-cover w-100 rounded-5"
+                style="height: 80vh"
+                :alt="item.title"
               />
-              <div class="carousel-caption d-none d-md-block">
-                <h5>First slide label</h5>
-                <p>Some representative placeholder content for the first slide.</p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img
-                src="https://images.unsplash.com/photo-1682686580433-2af05ee670ad?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                class="d-block img-fluid w-100 object-fit-cover"
-                alt="..."
-              />
-              <div class="carousel-caption d-none d-md-block">
-                <h5>Second slide label</h5>
-                <p>Some representative placeholder content for the second slide.</p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="..." class="d-block w-100 img-fluid" alt="..." />
-              <div class="carousel-caption d-none d-md-block">
-                <h5>Third slide label</h5>
-                <p>Some representative placeholder content for the third slide.</p>
+              <div class="carousel-caption bg-white bg-opacity-75 rounded-5">
+                <h5 class="text-primary">{{ item.title }}</h5>
+                <button class="btn btn-outline-primary" @click="openModal(item)">查看詳情</button>
               </div>
             </div>
           </div>
@@ -131,7 +111,39 @@
         </div>
       </div>
     </div>
-    <div class="vh-100 py-3" id="news"></div>
+    <div class="vh-100 py-3" id="news">
+      <div
+        class="container-lg h-100"
+        style="
+          background-image: url('https://www.ghibli.jp/img/totoro.png');
+          background-position: center;
+        "
+      >
+        <div class="d-flex flex-column gap-3 justify-content-center h-100">
+          <h2 class="text-danger mt-3 mt-lg-0"><i class="bi bi-fire mx-2"></i>活動快訊</h2>
+          <hr class="m-1" />
+          <div class="card" v-for="item in articles" :key="item">
+            <div class="card-header fs-4 bg-warning bg-opacity-50">
+              {{ item.title }}
+            </div>
+            <div
+              class="card-body"
+              style="cursor: pointer"
+              @click="() => $router.push(`./news/${item.id}`)"
+            >
+              <span class="badge text-bg-danger mb-2" v-if="item.num == 1">NEW</span>
+              <blockquote class="blockquote mb-0">
+                <p>{{ item.description }}</p>
+                <footer class="blockquote-footer">
+                  發布時間
+                  <cite title="Source Title">{{ timestampToTwTime(item.create_at) }}</cite>
+                </footer>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <footer class="bg-secondary bg-opacity-75 z-1 d-flex" style="height: 50px">
       <span class="m-auto"
         >Copyright<i class="bi bi-c-circle fs-6 mx-2"></i>{{ new Date().getFullYear() }} Tippy
@@ -147,16 +159,53 @@
       </div> -->
     </footer>
   </div>
+  <ProductComponent :tempProduct="tempProduct" @modal="(modal) => (detailModal = modal)" />
 </template>
 
 <script>
-// import HelloWorld from '@/components/HelloWorld.vue'
+import { timestampToTwTime } from '@/plugin/utils';
+import ProductComponent from '@/components/ProductComponent.vue';
 
-// export default {
-//   components: {
-//     HelloWorld
-//   }
-// }
+const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env;
+export default {
+  data() {
+    return {
+      products: [],
+      tempProduct: {},
+      detailModal: null,
+      articles: [],
+    };
+  },
+  components: { ProductComponent },
+
+  methods: {
+    getProducts() {
+      this.$http.get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products?page=1`).then((res) => {
+        const data = res.data.products;
+        this.products = data.length > 5 ? data.slice(0, 3) : data;
+        console.log(this.products);
+      });
+    },
+    // 開啟 Modal
+    openModal(item) {
+      this.tempProduct = JSON.parse(JSON.stringify(item));
+      this.detailModal.show();
+    },
+    timestampToTwTime,
+    getArticles(page = 1) {
+      this.$http
+        .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/articles?page=${page}`)
+        .then((res) => {
+          const data = res.data.articles;
+          this.articles = data.length > 5 ? data.slice(0, 3) : data;
+        });
+    },
+  },
+  mounted() {
+    this.getProducts();
+    this.getArticles();
+  },
+};
 </script>
 
 <style>
