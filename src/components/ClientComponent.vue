@@ -88,6 +88,9 @@ export default {
       message: '',
     };
   },
+  computed: {
+    ...mapState(ordersStore, ['cart']),
+  },
   methods: {
     ...mapActions(ordersStore, ['checkoutProducts']),
     sendOrder() {
@@ -100,9 +103,7 @@ export default {
       };
       this.message = '';
     },
-    computed: {
-      ...mapState(ordersStore, ['cart']),
-    },
+
     //  電話認證
     isPhone(value) {
       const phoneNumber = /^(09)[0-9]{8}$/;

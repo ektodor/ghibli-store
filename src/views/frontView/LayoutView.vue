@@ -76,7 +76,7 @@
 import { mapState, mapActions } from 'pinia';
 import ordersStore from '@/stores/ordersStore';
 
-const { VITE_APP_API_URL } = import.meta.env;
+// const { VITE_APP_API_URL } = import.meta.env;
 export default {
   data() {
     return {
@@ -91,20 +91,6 @@ export default {
   },
   mounted() {
     this.getCartProducts();
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1');
-    if (!token) {
-      this.loginState = false;
-      return;
-    }
-    this.$http.defaults.headers.common.Authorization = token;
-    this.$http
-      .post(`${VITE_APP_API_URL}/api/user/check`, {})
-      .then(() => {
-        this.loginState = true;
-      })
-      .catch(() => {
-        this.loginState = false;
-      });
   },
 };
 </script>

@@ -16,6 +16,7 @@
       style="
         background-image: url('https://www.ghibli.jp/img/totoro.png');
         background-position: center;
+        background-repeat: no-repeat;
       "
     >
       <div
@@ -80,7 +81,7 @@
             >
               <img
                 :src="item?.imagesUrl[0]"
-                class="d-block img-fluid object-fit-cover w-100 rounded-5"
+                class="d-block img-fluid w-100 object-fit-cover rounded-5"
                 style="height: 80vh"
                 :alt="item.title"
               />
@@ -111,12 +112,13 @@
         </div>
       </div>
     </div>
-    <div class="vh-100 py-3" id="news">
+    <div class="min-vh-100 py-3" id="news">
       <div
         class="container-lg h-100"
         style="
           background-image: url('https://www.ghibli.jp/img/totoro.png');
           background-position: center;
+          background-repeat: no-repeat;
         "
       >
         <div class="d-flex flex-column gap-3 justify-content-center h-100">
@@ -133,7 +135,7 @@
             >
               <span class="badge text-bg-danger mb-2" v-if="item.num == 1">NEW</span>
               <blockquote class="blockquote mb-0">
-                <p>{{ item.description }}</p>
+                <p>{{ showDescription(item.description) }}</p>
                 <footer class="blockquote-footer">
                   發布時間
                   <cite title="Source Title">{{ timestampToTwTime(item.create_at) }}</cite>
@@ -149,14 +151,6 @@
         >Copyright<i class="bi bi-c-circle fs-6 mx-2"></i>{{ new Date().getFullYear() }} Tippy
         Wang</span
       >
-      <!-- <div class="text-center">
-        <router-link to="/login" v-if="!loginState" class="btn btn-success me-lg-1"
-          >後台管理</router-link
-        >
-        <router-link to="/admin/products" class="btn btn-success me-lg-1" v-else
-          >前往後台</router-link
-        >
-      </div> -->
     </footer>
   </div>
   <ProductComponent :tempProduct="tempProduct" @modal="(modal) => (detailModal = modal)" />
@@ -174,6 +168,9 @@ export default {
       tempProduct: {},
       detailModal: null,
       articles: [],
+      productStatus: false,
+      articleStatus: false,
+      loading: null,
     };
   },
   components: { ProductComponent },
@@ -183,7 +180,8 @@ export default {
       this.$http.get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products?page=1`).then((res) => {
         const data = res.data.products;
         this.products = data.length > 5 ? data.slice(0, 3) : data;
-        console.log(this.products);
+        this.productStatus = true;
+        this.hideLoading();
       });
     },
     // 開啟 Modal
@@ -198,10 +196,24 @@ export default {
         .then((res) => {
           const data = res.data.articles;
           this.articles = data.length > 5 ? data.slice(0, 3) : data;
+          this.articleStatus = true;
+          this.hideLoading();
         });
+    },
+    showDescription(description) {
+      if (description.length > 100) {
+        return `${description.substring(0, 97)}...`;
+      }
+      return description;
+    },
+    hideLoading() {
+      if (this.productStatus && this.articleStatus) {
+        this.loading.hide();
+      }
     },
   },
   mounted() {
+    this.loading = this.$loading.show();
     this.getProducts();
     this.getArticles();
   },

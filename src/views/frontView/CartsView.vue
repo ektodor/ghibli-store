@@ -1,7 +1,7 @@
 <template>
   <div class="container-lg h-100">
     <div
-      class="row my-2 p-lg-5 p-1 rounded-3 justify-content-between"
+      class="row my-2 p-lg-5 p-1 rounded-3 justify-content-center justify-content-lg-between"
       v-if="cart?.carts?.length > 0"
     >
       <div class="text-end col-lg-6">
@@ -26,30 +26,19 @@
 <script>
 import FrontOrderComponent from '@/components/FrontOrderComponent.vue';
 import ClientComponent from '@/components/ClientComponent.vue';
-import { mapState } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import ordersStore from '@/stores/ordersStore';
 // const { VITE_APP_URL, VITE_APP_API_NAME } = import.meta.env;
 export default {
-  data() {
-    return {
-      // cart: {},
-      // user: {
-      //   name: '',
-      //   email: '',
-      //   tel: '',
-      //   address: '',
-      // },
-      // message: '',
-      // isCartLoading: false,
-      // isDetailLoading: false,
-    };
-  },
   computed: {
     ...mapState(ordersStore, ['cart']),
   },
+  methods: {
+    ...mapActions(ordersStore, ['getCartProducts']),
+  },
   components: { FrontOrderComponent, ClientComponent },
   mounted() {
-    // this.getCartProducts()
+    this.getCartProducts();
   },
 };
 </script>

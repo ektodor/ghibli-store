@@ -32,7 +32,13 @@
           <span class="input-group-text" id="inputGroup-sizing-default">本次活動優惠碼</span>
           <input type="text" class="form-control" disabled :value="article.tags[0]?.coupon" />
 
-          <button class="btn btn-warning">儲存優惠卷</button>
+          <button
+            class="btn btn-warning"
+            @click="addCoupon(article.tags[0]?.coupon)"
+            :class="{ disabled: article.tags[0]?.coupon == '' }"
+          >
+            儲存優惠卷
+          </button>
         </div>
       </div>
     </div>
@@ -40,6 +46,9 @@
 </template>
 
 <script>
+import { mapActions } from 'pinia';
+import couponsStore from '@/stores/couponsStore';
+
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env;
 export default {
   data() {
@@ -50,13 +59,15 @@ export default {
   props: ['id'],
   methods: {
     getArticle() {
+      const loading = this.$loading.show();
       this.$http
         .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/article/${this.id}`)
         .then((res) => {
           this.article = res.data.article;
-          console.log(this.article);
+          loading.hide();
         });
     },
+    ...mapActions(couponsStore, ['addCoupon']),
   },
   mounted() {
     this.getArticle();

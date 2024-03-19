@@ -23,9 +23,11 @@
           style="cursor: pointer"
         >
           <th scope="row">{{ item.num }}</th>
-          <td class="d-flex justify-content-center align-items-center">
-            <p class="m-0 py-1">{{ item.title }}</p>
-            <span class="badge text-bg-danger ms-2" v-if="item.num == 1">NEW</span>
+          <td class="w-25">
+            <p class="m-0 py-1">
+              {{ item.title }}
+              <span class="badge text-bg-danger ms-2 mb-1" v-if="item.num == 1">NEW</span>
+            </p>
           </td>
           <td>{{ item.description }}</td>
           <td>{{ timestampToTwTime(item.create_at) }}</td>
@@ -52,11 +54,13 @@ export default {
   methods: {
     timestampToTwTime,
     getArticles(page = 1) {
+      const loading = this.$loading.show();
       this.$http
         .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/articles?page=${page}`)
         .then((res) => {
           this.articles = res.data.articles;
           this.pagination = res.data.pagination;
+          loading.hide();
         });
     },
   },

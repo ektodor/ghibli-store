@@ -11,11 +11,11 @@ export default defineStore('ordersStore', {
   // pinia : state、actions、getters
   state: () => ({
     cart: [],
+    loading: null,
   }),
   actions: {
     // 加入購物車
     addProduct(id, qty = 1, mode = null) {
-      // this.isDetailLoading = true;
       axios
         .post(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart`, {
           data: {
@@ -36,13 +36,13 @@ export default defineStore('ordersStore', {
     },
     // 購物車列表
     getCartProducts() {
-      // console.log("購物車列表");
+      this.loading = true;
       axios
         .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart`)
         .then((res) => {
           this.cart = JSON.parse(JSON.stringify(res.data.data));
-          // this.isDetailLoading = false;
-          // this.isCartLoading = false;
+          console.log(this.cart);
+          this.loading = false;
         })
         .catch((err) => {
           this.errorMessage(err, '取得購物車列表失敗');
@@ -50,7 +50,6 @@ export default defineStore('ordersStore', {
     },
     // 刪除購物車項目 單一
     deleteProduct(id) {
-      this.isCartLoading = true;
       // console.log("刪除購物車項目 單一", id);
       axios
         .delete(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart/${id}`)
@@ -77,7 +76,6 @@ export default defineStore('ordersStore', {
     },
     // 購物車產品數量
     updateCartQuantity(id, productId, qty) {
-      this.isCartLoading = true;
       // console.log("購物車產品數量", id, qty);
       axios
         .put(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart/${id}`, {

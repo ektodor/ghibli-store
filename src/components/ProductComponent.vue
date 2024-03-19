@@ -62,21 +62,22 @@
                 </button>
               </div>
             </div>
+
+            <div class="row mb-2">
+              <div class="col">
+                <span class="badge bg-warning text-dark">商品簡介</span>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">{{ tempProduct.description }}</div>
+            </div>
             <div class="row mb-2">
               <div class="col">
                 <span class="badge bg-warning text-dark">商品描述</span>
               </div>
             </div>
-            <div class="row mb-3">
-              <div class="col">{{ tempProduct.content }}</div>
-            </div>
-            <div class="row mb-2">
-              <div class="col">
-                <span class="badge bg-warning text-dark">商品資料</span>
-              </div>
-            </div>
             <div class="row">
-              <div class="col">{{ tempProduct.description }}</div>
+              <div class="col">{{ tempProduct.content }}</div>
             </div>
           </div>
         </div>

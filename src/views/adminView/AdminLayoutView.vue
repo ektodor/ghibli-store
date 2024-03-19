@@ -9,6 +9,10 @@
           <div class="col-10">
             <div class="row justify-content-end">
               <div class="col-auto ms-auto">
+                <button class="btn btn-primary me-3" @click="() => $router.push('/')">
+                  <i class="bi bi-box-arrow-right"></i>
+                  回首頁
+                </button>
                 <button class="btn btn-primary" @click="logout">
                   <i class="bi bi-box-arrow-right"></i>
                   登出

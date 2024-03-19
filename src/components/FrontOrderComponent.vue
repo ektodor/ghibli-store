@@ -13,8 +13,8 @@
         <thead class="table-primary">
           <tr>
             <th></th>
-            <th>品名</th>
-            <th style="width: 150px">數量/單位</th>
+            <th class="text-center">品名</th>
+            <th class="text-center" style="width: 150px">數量/單位</th>
             <th>單價</th>
           </tr>
         </thead>
@@ -27,15 +27,17 @@
                   type="button"
                   class="btn btn-outline-danger btn-sm"
                 >
-                  <i class="fas fa-spinner fa-pulse" v-if="isCartLoading"></i>
+                  <i class="fas fa-spinner fa-pulse"></i>
                   x
                 </button>
               </td>
-              <td>
+              <td class="text-center">
                 {{ item.product.title }}
-                <div class="text-success">已套用優惠券</div>
+                <div class="text-success">
+                  {{ coupon != '無優惠卷' ? '已套用優惠券' : '尚未套用優惠卷' }}
+                </div>
               </td>
-              <td>
+              <td class="text-center">
                 <div class="input-group input-group-sm">
                   <div class="input-group mb-3">
                     <input
@@ -63,6 +65,18 @@
         </tbody>
         <tfoot>
           <tr>
+            <td colspan="3" class="text-end"></td>
+
+            <td class="text-end" style="max-width: 100px">
+              <select v-model="coupon" class="form-control border-3 border" id="coupons">
+                <option selected value="無優惠卷" disabled>請選擇搭配優惠卷</option>
+                <option v-for="item in coupons" :key="item" :value="item">
+                  {{ item }}
+                </option>
+              </select>
+            </td>
+          </tr>
+          <tr>
             <td colspan="3" class="text-end">總計</td>
             <td class="text-end">{{ cart.total }}</td>
           </tr>
@@ -74,29 +88,46 @@
       </table>
     </div>
   </div>
+  <loading v-model:active="loading" :is-full-page="fullPage" />
 </template>
 
 <script>
 // const { VITE_APP_URL, VITE_APP_API_NAME } = import.meta.env;
 import { mapState, mapActions } from 'pinia';
 import ordersStore from '@/stores/ordersStore';
+import couponsStore from '@/stores/couponsStore';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 export default {
   data() {
     return {
-      // cart: {},
-      isCartLoading: false,
-      isDetailLoading: false,
+      fullPage: true,
+      coupon: '無優惠卷',
     };
   },
   methods: {
-    ...mapActions(ordersStore, ['getCartProducts', 'deleteAllProducts']),
+    ...mapActions(ordersStore, [
+      'getCartProducts',
+      'deleteAllProducts',
+      'deleteProduct',
+      'updateCartQuantity',
+    ]),
+    ...mapActions(couponsStore, ['useCoupon']),
   },
   computed: {
-    ...mapState(ordersStore, ['cart']),
+    ...mapState(ordersStore, ['cart', 'loading']),
+    ...mapState(couponsStore, ['coupons']),
   },
-  mounted() {
-    this.getCartProducts();
+  watch: {
+    async coupon() {
+      await this.useCoupon(this.coupon);
+      await this.getCartProducts();
+    },
   },
+  components: {
+    Loading,
+  },
+  emits: ['loading'],
 };
 </script>

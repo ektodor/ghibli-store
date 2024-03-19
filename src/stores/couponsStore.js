@@ -11,12 +11,13 @@ export default defineStore('couponsStore', {
   actions: {
     addCoupon(coupon) {
       this.coupons.push(coupon);
+      alert('新增優惠券成功');
     },
     useCoupon(coupon) {
       axios
         .post(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/coupon`, {
           data: {
-            coupon,
+            code: coupon,
           },
         })
         .then(() => {

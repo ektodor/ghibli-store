@@ -94,10 +94,10 @@
               <error-message name="留言" class="invalid-feedback"></error-message>
             </div>
             <div class="mb-3" :key="index" v-for="(item, index) in order.products">
-              <div class="card mb-3" style="max-width: 540px">
+              <div class="card mb-3 mx-auto" style="max-width: 540px">
                 <div class="row g-0">
                   <div class="col-md-4">
-                    <img :src="item.product.imageUrl" alt="img" style="max-width: 100px" />
+                    <img :src="item.product.imageUrl" class="img-fluid w-100 rounded-3" alt="img" />
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
@@ -165,12 +165,12 @@ export default {
   methods: {
     updateOrder() {
       console.log('updateOrder');
+
       this.$http
         .put(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${this.order.id}`, {
-          order: this.order,
+          data: this.order,
         })
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
           this.$emit('read-data');
         })
         .catch((err) => {
