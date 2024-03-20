@@ -28,6 +28,13 @@ const routes = [
         component: () => import('../views/frontView/ProductsView.vue'),
       },
       {
+        path: 'products/:id',
+        component: () => import('../views/frontView/ProductDetailView.vue'),
+        props: (route) => ({
+          id: route.params.id,
+        }),
+      },
+      {
         path: 'news',
         component: () => import('../views/frontView/NewsView.vue'),
       },

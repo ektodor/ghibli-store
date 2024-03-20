@@ -41,7 +41,6 @@ export default defineStore('ordersStore', {
         .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart`)
         .then((res) => {
           this.cart = JSON.parse(JSON.stringify(res.data.data));
-          console.log(this.cart);
           this.loading = false;
         })
         .catch((err) => {

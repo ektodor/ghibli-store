@@ -164,8 +164,6 @@ export default {
   },
   methods: {
     updateOrder() {
-      console.log('updateOrder');
-
       this.$http
         .put(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/order/${this.order.id}`, {
           data: this.order,
@@ -179,7 +177,6 @@ export default {
     },
     deleteItem(id) {
       delete this.order.products[id];
-      console.log(this.order);
     },
   },
   mounted() {

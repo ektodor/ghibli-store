@@ -11,5 +11,4 @@ const twTimeToTimestamp = (twTime) => {
   const time = new Date(twTime);
   return time.getTime() / 1000;
 };
-
 export { timestampToTwTime, twTimeToTimestamp };

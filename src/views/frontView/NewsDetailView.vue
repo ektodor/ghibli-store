@@ -1,21 +1,23 @@
 <!-- eslint-disable max-len -->
 <template>
-  <div class="container-lg d-flex flex-column gap-3 h-100 py-4">
-    <div class="row h-100">
+  <div
+    class="container d-flex align-items-center justify-content-center flex-column gap-3 h-100 py-4"
+  >
+    <div class="row">
       <div class="col-lg-6 d-flex align-items-center justify-content-center" v-if="article.image">
         <img
-          class="object-fit-cover border rounded"
+          class="object-fit-cover border rounded w-100"
           style="max-width: 500px"
           :src="article.image"
           alt="image"
         />
       </div>
       <div class="d-flex flex-column mt-4" :class="article.image ? 'col-lg-6' : 'col-12'">
-        <div class="d-flex">
+        <div class="d-flex flex-wrap">
           <h2><i class="bi bi-balloon text-danger"></i>{{ article.title }}</h2>
           <div class="align-items-center d-flex" v-if="article.tags">
             <span
-              class="badge text-bg-warning ms-3"
+              class="badge text-bg-warning ms-3 mt-3 mt-lg-0"
               v-for="item in article.tags[0]?.tags"
               :key="item"
               >{{ item }}</span
@@ -25,7 +27,7 @@
         <p class="mt-3">{{ article.description }}</p>
 
         <div
-          class="input-group mt-auto ms-auto"
+          class="input-group ms-auto mt-5"
           style="max-width: 500px"
           v-if="article.title && article.tags[0].coupon !== '無優惠卷'"
         >

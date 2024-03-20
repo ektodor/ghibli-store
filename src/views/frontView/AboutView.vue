@@ -67,12 +67,12 @@ export default {
     };
   },
   mounted() {
-    const loading = this.$loading.show();
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1');
     if (!token) {
       this.loginState = false;
       return;
     }
+    const loading = this.$loading.show();
     this.$http.defaults.headers.common.Authorization = token;
     this.$http
       .post(`${VITE_APP_API_URL}/api/user/check`, {})

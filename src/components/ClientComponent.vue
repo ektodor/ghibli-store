@@ -65,7 +65,7 @@
       <textarea id="message" class="form-control" cols="30" rows="10" v-model="message"></textarea>
     </div>
     <div class="text-end">
-      <button type="submit" class="btn btn-danger" :class="{ disabled: !cart?.carts?.length }">
+      <button type="submit" class="btn btn-primary" :class="{ disabled: !cart?.carts?.length }">
         送出訂單
       </button>
     </div>

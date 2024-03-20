@@ -4,10 +4,15 @@
     <div class="home-banner vh-100 d-flex">
       <router-link
         to="#topic"
-        style="--bs-icon-link-transform: translate3d(0, 0.2rem, 0); min-width: 300px"
+        style="--bs-icon-link-transform: translate3d(0, 0.2rem, 0); max-width: 500px"
         class="icon-link icon-link-hover m-auto btn p-4 bg-white bg-opacity-25 d-flex flex-column"
-        ><h3 class="m-0">遇見吉卜力</h3>
-        <i class="bi bi-caret-down fs-1"></i
+        ><img style="height: 70px" class="py-2" src="@/assets/ghibli-info-rental.png" alt="logo" />
+        <p class="text-start mb-0">我們致力於為用戶提供方便、快捷的租賃體驗。</p>
+        <p class="m-0">
+          無論是《龍貓》、《魔法公主》、《天空之城》還是其他經典作品，用戶可以輕鬆地租賃和欣賞最喜愛的吉卜力動畫電影，隨時隨地沉浸在這些令人驚嘆的故事和精彩的動畫世界中。
+        </p>
+        <p>立即加入我們，一同探索吉卜力動畫的奇妙世界吧！</p>
+        <i class="bi bi-caret-down fs-1 jumping"></i
       ></router-link>
     </div>
     <div
@@ -227,5 +232,20 @@ export default {
   background-position: center;
   background-size: cover;
   opacity: 0.75;
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.jumping {
+  animation: bounce 1s infinite;
 }
 </style>

@@ -17,12 +17,9 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <div
-            id="navbarSupportedContent"
-            class="ms-auto collapse navbar-collapse justify-content-end align-items-center"
-          >
+          <div id="navbarSupportedContent" class="collapse navbar-collapse">
             <ul
-              class="navbar-nav p-3 d-flex justify-content-center align-items-center gap-2 flex-row"
+              class="ms-auto w-50 navbar-nav p-3 d-flex justify-content-end justify-content-lg-end align-items-center gap-2 flex-row"
             >
               <li class="nav-item">
                 <RouterLink to="/" class="btn btn-success"

@@ -1,14 +1,32 @@
 <template>
   <div>
-    <button
-      @click="deleteAllProducts"
-      class="btn btn-danger mb-3"
-      :class="{ disabled: !cart?.carts?.length }"
-      type="button"
-    >
-      清空購物車
-    </button>
-    <div class="table-responsive-lg">
+    <div class="d-flex align-items-center my-3">
+      <select
+        :disabled="!(cart.total == cart.final_total)"
+        v-model="coupon"
+        class="form-control border-3 border w-50"
+        style="max-width: 200px"
+        id="coupons"
+      >
+        <option selected value="無優惠卷" disabled>
+          {{ cart.total == cart.final_total ? '請選擇搭配優惠卷' : '已使用過優惠卷' }}
+        </option>
+        <option v-for="item in coupons" :key="item" :value="item">
+          {{ item }}
+        </option>
+      </select>
+      <small class="text-danger align-self-end ms-2">優惠卷可以至消息內容中領取!!!</small>
+
+      <button
+        @click="deleteAllProducts"
+        class="btn btn-danger ms-auto"
+        :class="{ disabled: !cart?.carts?.length }"
+        type="button"
+      >
+        清空購物車
+      </button>
+    </div>
+    <div class="table-responsive-lg border-black border">
       <table class="table align-middle">
         <thead class="table-primary">
           <tr>
@@ -34,7 +52,7 @@
               <td class="text-center">
                 {{ item.product.title }}
                 <div class="text-success">
-                  {{ coupon != '無優惠卷' ? '已套用優惠券' : '尚未套用優惠卷' }}
+                  {{ item.total != item.final_total ? '已套用優惠券' : '尚未套用優惠卷' }}
                 </div>
               </td>
               <td class="text-center">
@@ -64,18 +82,6 @@
           </template>
         </tbody>
         <tfoot>
-          <tr>
-            <td colspan="3" class="text-end"></td>
-
-            <td class="text-end" style="max-width: 100px">
-              <select v-model="coupon" class="form-control border-3 border" id="coupons">
-                <option selected value="無優惠卷" disabled>請選擇搭配優惠卷</option>
-                <option v-for="item in coupons" :key="item" :value="item">
-                  {{ item }}
-                </option>
-              </select>
-            </td>
-          </tr>
           <tr>
             <td colspan="3" class="text-end">總計</td>
             <td class="text-end">{{ cart.total }}</td>
