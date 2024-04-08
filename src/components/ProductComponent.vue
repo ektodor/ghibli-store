@@ -90,6 +90,7 @@
               aria-label="數量"
               aria-describedby="button-addon2"
               v-model="tempQty"
+              min="1"
             />
             <button
               class="btn btn-outline-danger"

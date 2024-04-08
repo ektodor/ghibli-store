@@ -95,11 +95,16 @@ export default {
         .then((res) => {
           this.product = res.data.product;
           loading.hide();
+        })
+        .catch((err) => {
+          console.error(err.message);
         });
     },
     ...mapActions(ordersStore, ['addProduct']),
-    addOrder(id, tempQty) {
-      this.addProduct(id, tempQty);
+    async addOrder(id, tempQty) {
+      const loading = this.$loading.show();
+      await this.addProduct(id, tempQty);
+      loading.hide();
     },
   },
   mounted() {

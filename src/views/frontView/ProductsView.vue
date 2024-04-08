@@ -98,7 +98,6 @@
 </template>
 
 <script>
-
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env;
 
 export default {
@@ -121,21 +120,31 @@ export default {
   },
   computed: {
     sortProudcts() {
+      const loading = this.$loading.show();
       const sortProducts = this.showProducts.filter(
         (item) => item.category === this.currentCategory,
       );
+      // eslint-disable-next-line vue/no-async-in-computed-properties
+      setTimeout(() => {
+        loading.hide();
+      }, 300);
       return sortProducts.length > 0 ? sortProducts : this.showProducts;
     },
   },
   methods: {
     getAllProducts() {
       const loading = this.$loading.show();
-      this.$http.get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products/all`).then((res) => {
-        this.allProudcts = res.data.products;
-        this.category = [...new Set(this.allProudcts.map((item) => item.category))];
-        this.showProducts = this.allProudcts;
-        loading.hide();
-      });
+      this.$http
+        .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products/all`)
+        .then((res) => {
+          this.allProudcts = res.data.products;
+          this.category = [...new Set(this.allProudcts.map((item) => item.category))];
+          this.showProducts = this.allProudcts;
+          loading.hide();
+        })
+        .catch((err) => {
+          console.error(err.message);
+        });
     },
     showDescription(description) {
       if (description.length > 50) {

@@ -1,6 +1,6 @@
 // 解構方法
 import { defineStore } from 'pinia';
-
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env;
@@ -12,10 +12,12 @@ export default defineStore('ordersStore', {
   state: () => ({
     cart: [],
     loading: null,
+    alertInstance: null,
   }),
   actions: {
     // 加入購物車
     addProduct(id, qty = 1, mode = null) {
+      this.loading = true;
       axios
         .post(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart`, {
           data: {
@@ -25,7 +27,12 @@ export default defineStore('ordersStore', {
         })
         .then(() => {
           this.getCartProducts();
-          alert('購物車更新成功');
+          this.loading = false;
+          Swal.fire({
+            title: '恭喜!',
+            text: '購物車更新成功',
+            icon: 'success',
+          });
           if (mode) {
             mode.hide();
           }
@@ -49,12 +56,17 @@ export default defineStore('ordersStore', {
     },
     // 刪除購物車項目 單一
     deleteProduct(id) {
-      // console.log("刪除購物車項目 單一", id);
+      this.loading = true;
       axios
         .delete(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart/${id}`)
         .then(() => {
+          this.loading = false;
           this.getCartProducts();
-          alert('購物車更新成功');
+          Swal.fire({
+            title: '恭喜!',
+            text: '購物車更新成功',
+            icon: 'success',
+          });
         })
         .catch((err) => {
           this.errorMessage(err, '刪除購物車項目失敗 (單一)');
@@ -62,12 +74,15 @@ export default defineStore('ordersStore', {
     },
     // 刪除購物車項目 全部
     deleteAllProducts() {
-      // console.log("刪除購物車項目 全部");
       axios
         .delete(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/carts`)
         .then(() => {
           this.getCartProducts();
-          alert('購物車更新成功');
+          Swal.fire({
+            title: '恭喜!',
+            text: '購物車更新成功',
+            icon: 'success',
+          });
         })
         .catch((err) => {
           this.errorMessage(err, '刪除購物車項目失敗 (全部)');
@@ -75,7 +90,6 @@ export default defineStore('ordersStore', {
     },
     // 購物車產品數量
     updateCartQuantity(id, productId, qty) {
-      // console.log("購物車產品數量", id, qty);
       axios
         .put(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart/${id}`, {
           data: {
@@ -85,7 +99,11 @@ export default defineStore('ordersStore', {
         })
         .then(() => {
           this.getCartProducts();
-          alert('購物車更新成功');
+          Swal.fire({
+            title: '恭喜!',
+            text: '購物車更新成功',
+            icon: 'success',
+          });
         })
         .catch((err) => {
           this.errorMessage(err, '更改產品數量失敗');
@@ -102,21 +120,27 @@ export default defineStore('ordersStore', {
         })
         .then(() => {
           this.getCartProducts();
-          alert('商品已完成結帳');
+          Swal.fire({
+            title: '恭喜!',
+            text: '商品已完成結帳',
+            icon: 'success',
+          });
         })
-        .then((err) => {
+        .catch((err) => {
           this.errorMessage(err, '結帳失敗');
         });
     },
     // 錯誤資訊
     errorMessage(err, meg) {
-      console.log(err);
-      alert(meg);
+      Swal.fire({
+        title: '失敗!',
+        text: meg,
+        icon: 'success',
+      });
     },
   },
   getters: {
     getOrdersNum({ cart }) {
-      // console.log('getOrdersNum', cart.carts);
       return cart.carts?.length;
     },
   },

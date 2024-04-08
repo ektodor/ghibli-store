@@ -8,7 +8,7 @@
     class="p-3 w-75 bg-success position-absolute translate-middle top-50 start-50 rounded-3"
   >
     <div class="w-100 text-center">
-      <img class="pb-3" width="150px" src="@/assets/ghibli-info-rental.png" alt="logo" />
+      <img class="pb-3" width="150px" src="@/assets/img/ghibli-info-rental.png" alt="logo" />
     </div>
     <div class="mb-3">
       <label for="email" class="form-label fw-bold">電子信箱 : </label>

@@ -61,6 +61,9 @@ export default {
           this.articles = res.data.articles;
           this.pagination = res.data.pagination;
           loading.hide();
+        })
+        .catch((err) => {
+          console.error(err.message);
         });
     },
   },

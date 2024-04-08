@@ -107,7 +107,7 @@ export default {
           loading.hide();
         })
         .catch((err) => {
-          console.err(err.message);
+          console.error(err.message);
         });
     },
     deleteAllOrders() {
@@ -117,7 +117,7 @@ export default {
           this.readOrders();
         })
         .catch((err) => {
-          console.err(err.message);
+          console.error(err.message);
         });
     },
   },

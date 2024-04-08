@@ -67,6 +67,9 @@ export default {
         .then((res) => {
           this.article = res.data.article;
           loading.hide();
+        })
+        .catch((err) => {
+          console.error(err.message);
         });
     },
     ...mapActions(couponsStore, ['addCoupon']),

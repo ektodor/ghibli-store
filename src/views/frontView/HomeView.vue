@@ -6,7 +6,11 @@
         to="#topic"
         style="--bs-icon-link-transform: translate3d(0, 0.2rem, 0); max-width: 500px"
         class="icon-link icon-link-hover m-auto btn p-4 bg-white bg-opacity-25 d-flex flex-column"
-        ><img style="height: 70px" class="py-2" src="@/assets/ghibli-info-rental.png" alt="logo" />
+        ><img
+          style="height: 70px"
+          class="py-2"
+          src="@/assets/img/ghibli-info-rental.png"
+          alt="logo" />
         <p class="text-start mb-0">我們致力於為用戶提供方便、快捷的租賃體驗。</p>
         <p class="m-0">
           無論是《龍貓》、《魔法公主》、《天空之城》還是其他經典作品，用戶可以輕鬆地租賃和欣賞最喜愛的吉卜力動畫電影，隨時隨地沉浸在這些令人驚嘆的故事和精彩的動畫世界中。
@@ -91,7 +95,7 @@
                 :alt="item.title"
               />
               <div class="carousel-caption bg-white bg-opacity-75 rounded-5">
-                <h5 class="text-primary">{{ item.title }}</h5>
+                <h4 class="text-primary">{{ item.title }}</h4>
                 <button class="btn btn-outline-primary" @click="openModal(item)">查看詳情</button>
               </div>
             </div>
@@ -127,12 +131,12 @@
         "
       >
         <div class="d-flex flex-column gap-3 justify-content-center h-100">
-          <h2 class="text-danger mt-3 mt-lg-0"><i class="bi bi-fire mx-2"></i>活動快訊</h2>
+          <h2 class="text-danger mt-3 mt-lg-3 mb-0"><i class="bi bi-fire mx-2"></i>活動快訊</h2>
           <hr class="m-1" />
           <div class="card" v-for="item in articles" :key="item">
-            <div class="card-header fs-4 bg-warning bg-opacity-50">
+            <h3 class="card-header fs-4 bg-warning bg-opacity-50">
               {{ item.title }}
-            </div>
+            </h3>
             <div
               class="card-body"
               style="cursor: pointer"
@@ -141,21 +145,100 @@
               <span class="badge text-bg-danger mb-2" v-if="item.num == 1">NEW</span>
               <blockquote class="blockquote mb-0">
                 <p>{{ showDescription(item.description) }}</p>
-                <footer class="blockquote-footer">
+                <p class="blockquote-footer">
                   發布時間
                   <cite title="Source Title">{{ timestampToTwTime(item.create_at) }}</cite>
-                </footer>
+                </p>
               </blockquote>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <footer class="bg-secondary bg-opacity-75 z-1 d-flex" style="height: 50px">
-      <span class="m-auto"
-        >Copyright<i class="bi bi-c-circle fs-6 mx-2"></i>{{ new Date().getFullYear() }} Tippy
-        Wang</span
-      >
+    <footer class="bg-secondary bg-opacity-75 p-2 d-flex mt-3">
+      <div class="container">
+        <div class="row mt-3 justify-content-center">
+          <div class="col-12">
+            <ul class="nav justify-content-center align-items-center gap-5">
+              <li class="nav-item">
+                <RouterLink
+                  to="/home"
+                  class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                  ><i class="bi bi-house me-lg-1"></i>
+                  <div class="d-none d-lg-inline">首頁</div></RouterLink
+                >
+              </li>
+              <li class="nav-item">
+                <RouterLink
+                  to="/products"
+                  class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                  ><i class="bi bi-film me-lg-1"></i>
+                  <div class="d-none d-lg-inline">片單</div></RouterLink
+                >
+              </li>
+
+              <li class="nav-item">
+                <RouterLink
+                  to="/news"
+                  class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                  ><i class="bi bi-newspaper me-lg-1"></i>
+                  <div class="d-none d-lg-inline">消息</div></RouterLink
+                >
+              </li>
+              <li class="nav-item">
+                <RouterLink
+                  to="/about"
+                  class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                  ><i class="bi bi-people-fill me-lg-1"></i>
+                  <div class="d-none d-lg-inline">關於我們</div></RouterLink
+                >
+              </li>
+              <li class="nav-item">
+                <RouterLink
+                  to="/carts"
+                  class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                  ><i class="bi bi-cart me-lg-1"></i>
+                  <div class="d-none d-lg-inline">購物車</div>
+                </RouterLink>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-12">
+            <ul class="nav flex gap-4 justify-content-center align-items-center">
+              <li class="nav-item">
+                <a
+                  target="_blank"
+                  href="https://github.com/ektodor?tab=repositories"
+                  class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                  ><i class="bi bi-github fs-4"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="mailto:ektoderwang@gmail.com"
+                  class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                  ><i class="bi bi-envelope fs-4"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="tel:0912345678"
+                  class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                  ><i class="bi bi-telephone fs-4"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <span class="m-auto col-auto"
+            >Copyright<i class="bi bi-c-circle fs-6 mx-2"></i>{{ new Date().getFullYear() }} Tippy
+            Wang</span
+          >
+        </div>
+      </div>
     </footer>
   </div>
   <ProductComponent :tempProduct="tempProduct" @modal="(modal) => (detailModal = modal)" />
@@ -182,12 +265,17 @@ export default {
 
   methods: {
     getProducts() {
-      this.$http.get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products?page=1`).then((res) => {
-        const data = res.data.products;
-        this.products = data.length > 5 ? data.slice(0, 3) : data;
-        this.productStatus = true;
-        this.hideLoading();
-      });
+      this.$http
+        .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/products?page=1`)
+        .then((res) => {
+          const data = res.data.products;
+          this.products = data.length > 5 ? data.slice(0, 3) : data;
+          this.productStatus = true;
+          this.hideLoading();
+        })
+        .catch((err) => {
+          console.error(err.message);
+        });
     },
     // 開啟 Modal
     openModal(item) {
@@ -203,6 +291,9 @@ export default {
           this.articles = data.length > 5 ? data.slice(0, 3) : data;
           this.articleStatus = true;
           this.hideLoading();
+        })
+        .catch((err) => {
+          console.error(err.message);
         });
     },
     showDescription(description) {

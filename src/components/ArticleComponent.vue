@@ -207,7 +207,7 @@ export default {
       ];
       this.article.tags = tags;
       this.article.create_at = Math.floor(new Date().getTime() / 1000);
-      // console.log(this.article);
+
       this.$http
         .post(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/article`, {
           data: this.article,
@@ -217,7 +217,7 @@ export default {
           this.modal.hide();
         })
         .catch((err) => {
-          console.dir(err.message);
+          console.error(err.message);
         });
     },
     updateArticle() {
@@ -228,7 +228,6 @@ export default {
         },
       ];
       this.article.tags = tags;
-      // console.log(this.article);
       this.$http
         .put(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/article/${this.article.id}`, {
           data: this.article,
@@ -238,7 +237,7 @@ export default {
           this.modal.hide();
         })
         .catch((err) => {
-          console.dir(err.message);
+          console.error(err.message);
         });
     },
     addTag() {

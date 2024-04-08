@@ -49,8 +49,7 @@ export default {
     deleteItem() {
       this.$http
         .delete(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/admin/${this.url}`)
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
           this.$emit('read-data');
           this.modal.hide();
         })

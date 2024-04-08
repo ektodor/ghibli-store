@@ -141,7 +141,7 @@ export default {
           this.modal.hide();
         })
         .catch((err) => {
-          console.log(err.message);
+          console.error(err.message);
         });
     },
     updateCoupon() {
@@ -156,7 +156,7 @@ export default {
           this.modal.hide();
         })
         .catch((err) => {
-          console.log(err.message);
+          console.error(err.message);
         });
     },
   },

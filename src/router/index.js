@@ -10,7 +10,7 @@ const routes = [
     component: () => import('../views/frontView/LayoutView.vue'),
     children: [
       {
-        path: '',
+        path: 'home',
         name: 'Home',
         component: () => import('../views/frontView/HomeView.vue'),
       },
@@ -44,6 +44,10 @@ const routes = [
         props: (route) => ({
           id: route.params.id,
         }),
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        component: () => import('../views/NotFoundView.vue'),
       },
     ],
   },

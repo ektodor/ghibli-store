@@ -95,7 +95,7 @@ export default {
           loading.hide();
         })
         .catch((err) => {
-          console.log(err.message);
+          console.error(err.message);
         });
     },
     openDeleteModal(item) {

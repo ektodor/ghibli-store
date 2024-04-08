@@ -113,7 +113,7 @@ export default {
           loading.hide();
         })
         .catch((err) => {
-          console.log(err.message);
+          console.error(err.message);
         });
     },
     readCoupons(currentPage = 1) {
@@ -124,7 +124,7 @@ export default {
           this.pagination = res.data.pagination;
         })
         .catch((err) => {
-          console.log(err.message);
+          console.error(err.message);
         });
     },
   },
