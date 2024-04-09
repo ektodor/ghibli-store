@@ -1,1 +1,0 @@
-import{_ as t,o as s,c as o,b as e}from"./index-CX6vVx-6.js";const c={},n={class:"container h-100"},r=e("div",{class:"h-100 d-flex justify-content-center align-items-center"},[e("div",{class:"border border-3 p-5 rounded-3"},[e("h2",{class:"fw-bold text-danger"},"404 查無此頁面 ‼️")])],-1),a=[r];function d(_,i){return s(),o("div",n,a)}const f=t(c,[["render",d]]);export{f as default};
