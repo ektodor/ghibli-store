@@ -4,7 +4,7 @@
     <header class="bg-secondary bg-opacity-75 z-1 d-flex gap-2 align-items-center fixed-top">
       <div class="container-lg">
         <div class="justify-content-between navbar navbar-expand-lg">
-          <router-link to="/home">
+          <router-link to="/">
             <h1>
               <img
                 style="height: 70px"
@@ -77,10 +77,7 @@
       <router-view></router-view>
     </main>
 
-    <footer
-      v-if="this.$route.fullPath !== '/home'"
-      class="bg-secondary bg-opacity-75 p-2 d-flex mt-3"
-    >
+    <footer v-if="this.$route.fullPath !== '/'" class="bg-secondary bg-opacity-75 p-2 d-flex mt-3">
       <div class="container">
         <div class="row mt-3 justify-content-center">
           <div class="col-12">

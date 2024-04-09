@@ -160,14 +160,14 @@
         <div class="row mt-3 justify-content-center">
           <div class="col-12">
             <ul class="nav justify-content-center align-items-center gap-5">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <RouterLink
-                  to="/home"
+                  to="/"
                   class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
                   ><i class="bi bi-house me-lg-1"></i>
                   <div class="d-none d-lg-inline">首頁</div></RouterLink
                 >
-              </li>
+              </li> -->
               <li class="nav-item">
                 <RouterLink
                   to="/products"
