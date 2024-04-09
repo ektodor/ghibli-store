@@ -1,7 +1,10 @@
 <!-- eslint-disable max-len -->
 <template>
-  <div class="vh-100 d-flex flex-column position-relative">
-    <header class="bg-secondary bg-opacity-75 z-1 d-flex gap-2 align-items-center fixed-top">
+  <div class="d-flex flex-column position-relative h-100">
+    <header
+      :class="this.$route.fullPath == '/' ? ' fixed-top ' : 'sticky-top'"
+      class="bg-secondary bg-opacity-75 z-1 d-flex gap-2 align-items-center"
+    >
       <div class="container-lg">
         <div class="justify-content-between navbar navbar-expand-lg">
           <router-link to="/">
