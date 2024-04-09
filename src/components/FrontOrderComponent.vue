@@ -51,7 +51,7 @@
               </td>
               <td class="text-center">
                 {{ item.product.title }}
-                <div class="text-success">
+                <div style="color: rgb(92 87 85)">
                   {{ item.total != item.final_total ? '已套用優惠券' : '尚未套用優惠卷' }}
                 </div>
               </td>
@@ -75,7 +75,7 @@
                 >
 
                 <br />
-                <small class="text-success">折扣價：</small>
+                <small style="color: rgb(92 87 85)">折扣價：</small>
                 {{ item.final_total }}
               </td>
             </tr>
@@ -87,8 +87,8 @@
             <td class="text-end">{{ cart.total }}</td>
           </tr>
           <tr>
-            <td colspan="3" class="text-end text-success">折扣價</td>
-            <td class="text-end text-success">{{ cart.final_total }}</td>
+            <td colspan="3" style="color: rgb(92 87 85)" class="text-end">折扣價</td>
+            <td class="text-end" style="color: rgb(92 87 85)">{{ cart.final_total }}</td>
           </tr>
         </tfoot>
       </table>

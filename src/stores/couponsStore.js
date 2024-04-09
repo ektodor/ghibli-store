@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const { VITE_APP_API_URL, VITE_APP_API_NAME } = import.meta.env;
 
@@ -11,7 +12,11 @@ export default defineStore('couponsStore', {
   actions: {
     addCoupon(coupon) {
       this.coupons.push(coupon);
-      alert('新增優惠券成功');
+      Swal.fire({
+        title: '恭喜!',
+        text: '新增優惠券成功',
+        icon: 'success',
+      });
     },
     useCoupon(coupon) {
       axios
@@ -21,10 +26,18 @@ export default defineStore('couponsStore', {
           },
         })
         .then(() => {
-          alert('使用優惠券成功');
+          Swal.fire({
+            title: '恭喜!',
+            text: '使用優惠券成功',
+            icon: 'success',
+          });
         })
-        .catch((err) => {
-          this.errorMessage(err, '使用優惠券失敗');
+        .catch(() => {
+          Swal.fire({
+            title: '失敗!',
+            text: '使用優惠券失敗',
+            icon: 'error',
+          });
         });
     },
   },

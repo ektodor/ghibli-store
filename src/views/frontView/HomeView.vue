@@ -33,7 +33,7 @@
       >
         <router-link
           to="/products"
-          class="icon-link w-50 h-50 icon-link-hover d-flex flex-column rounded-5 justify-content-center btn btn-outline-primary border-3 d-flex align-items-center shadow"
+          class="backdrop-blur icon-link w-50 h-50 icon-link-hover d-flex flex-column rounded-5 justify-content-center btn btn-outline-primary border-3 d-flex align-items-center shadow"
           style="
             /* min-width: 300px;
             height: 300px; */
@@ -46,7 +46,7 @@
 
         <router-link
           to="/news"
-          class="icon-link icon-link-hover w-50 h-50 d-flex flex-column rounded-5 justify-content-center btn btn-outline-primary border-3 d-flex align-items-center shadow"
+          class="icon-link backdrop-blur icon-link-hover w-50 h-50 d-flex flex-column rounded-5 justify-content-center btn btn-outline-primary border-3 d-flex align-items-center shadow"
           style="--bs-icon-link-transform: translate3d(0, -0.5rem, 0)"
         >
           <h2><i class="bi bi-fire mx-2"></i>活動消息</h2>
@@ -55,7 +55,7 @@
 
         <router-link
           to="/about"
-          class="icon-link icon-link-hover w-50 h-50 d-flex flex-column rounded-5 justify-content-center btn btn-outline-primary border-3 d-flex align-items-center shadow"
+          class="icon-link backdrop-blur icon-link-hover w-50 h-50 d-flex flex-column rounded-5 justify-content-center btn btn-outline-primary border-3 d-flex align-items-center shadow"
           style="--bs-icon-link-transform: translate3d(0, -0.5rem, 0)"
         >
           <h2>關於我們</h2>
@@ -338,5 +338,9 @@ export default {
 
 .jumping {
   animation: bounce 1s infinite;
+}
+
+.backdrop-blur {
+  backdrop-filter: blur(5px);
 }
 </style>

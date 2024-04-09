@@ -9,8 +9,6 @@ import 'bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
-import VueSweetalert2 from 'vue-sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
 // eslint-disable-next-line object-curly-newline
 import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate';
 
@@ -46,6 +44,5 @@ app.use(router);
 app.use(LoadingPlugin);
 app.use(VueAxios, axios);
 app.component('VueDatePicker', VueDatePicker);
-app.use(VueSweetalert2);
 
 app.mount('#app');

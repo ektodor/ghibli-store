@@ -12,22 +12,19 @@ export default defineStore('ordersStore', {
   state: () => ({
     cart: [],
     loading: null,
-    alertInstance: null,
   }),
   actions: {
     // 加入購物車
-    addProduct(id, qty = 1, mode = null) {
-      this.loading = true;
-      axios
+    async addProduct(id, qty = 1, mode = null) {
+      await axios
         .post(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart`, {
           data: {
             product_id: id,
             qty,
           },
         })
-        .then(() => {
-          this.getCartProducts();
-          this.loading = false;
+        .then(async () => {
+          await this.getCartProducts();
           Swal.fire({
             title: '恭喜!',
             text: '購物車更新成功',
@@ -42,9 +39,10 @@ export default defineStore('ordersStore', {
         });
     },
     // 購物車列表
-    getCartProducts() {
+    async getCartProducts() {
       this.loading = true;
-      axios
+
+      await axios
         .get(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart`)
         .then((res) => {
           this.cart = JSON.parse(JSON.stringify(res.data.data));
@@ -55,13 +53,13 @@ export default defineStore('ordersStore', {
         });
     },
     // 刪除購物車項目 單一
-    deleteProduct(id) {
+    async deleteProduct(id) {
       this.loading = true;
-      axios
+      await axios
         .delete(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart/${id}`)
-        .then(() => {
+        .then(async () => {
+          await this.getCartProducts();
           this.loading = false;
-          this.getCartProducts();
           Swal.fire({
             title: '恭喜!',
             text: '購物車更新成功',
@@ -73,11 +71,13 @@ export default defineStore('ordersStore', {
         });
     },
     // 刪除購物車項目 全部
-    deleteAllProducts() {
-      axios
+    async deleteAllProducts() {
+      this.loading = true;
+      await axios
         .delete(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/carts`)
-        .then(() => {
-          this.getCartProducts();
+        .then(async () => {
+          await this.getCartProducts();
+          this.loading = false;
           Swal.fire({
             title: '恭喜!',
             text: '購物車更新成功',
@@ -89,16 +89,18 @@ export default defineStore('ordersStore', {
         });
     },
     // 購物車產品數量
-    updateCartQuantity(id, productId, qty) {
-      axios
+    async updateCartQuantity(id, productId, qty) {
+      this.loading = true;
+      await axios
         .put(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/cart/${id}`, {
           data: {
             product_id: productId,
             qty,
           },
         })
-        .then(() => {
-          this.getCartProducts();
+        .then(async () => {
+          await this.getCartProducts();
+          this.loading = false;
           Swal.fire({
             title: '恭喜!',
             text: '購物車更新成功',
@@ -110,16 +112,17 @@ export default defineStore('ordersStore', {
         });
     },
     // 結帳
-    checkoutProducts(user, message) {
-      axios
+    async checkoutProducts(user, message) {
+      this.loading = true;
+      await axios
         .post(`${VITE_APP_API_URL}/api/${VITE_APP_API_NAME}/order`, {
           data: {
             user,
             message,
           },
         })
-        .then(() => {
-          this.getCartProducts();
+        .then(async () => {
+          await this.getCartProducts();
           Swal.fire({
             title: '恭喜!',
             text: '商品已完成結帳',

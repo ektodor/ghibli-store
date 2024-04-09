@@ -123,8 +123,10 @@ export default {
   props: ['tempProduct'],
   methods: {
     ...mapActions(ordersStore, ['addProduct']),
-    addOrder(id, tempQty) {
-      this.addProduct(id, tempQty, this.openDetailModal);
+    async addOrder(id, tempQty) {
+      const loading = this.$loading.show();
+      await this.addProduct(id, tempQty, this.openDetailModal);
+      loading.hide();
     },
   },
   mounted() {
