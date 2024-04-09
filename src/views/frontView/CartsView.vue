@@ -1,5 +1,5 @@
 <template>
-  <div class="container h-100">
+  <div class="container vh-100">
     <div
       class="row my-2 p-lg-5 p-1 rounded-3 justify-content-center justify-content-lg-between"
       v-if="cart?.carts?.length > 0"
@@ -11,7 +11,7 @@
         <ClientComponent />
       </div>
     </div>
-    <div class="h-100 d-flex justify-content-center align-items-center" v-else>
+    <div class="flex-grow-1 h-100 d-flex justify-content-center align-items-center" v-else>
       <div class="border p-4 mb-4">
         <h2 class="text-danger fw-bold">目前購物車為空</h2>
         <hr class="my-4" />
