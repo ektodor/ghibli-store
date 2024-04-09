@@ -4,7 +4,7 @@
       <div class="container-fluid" style="height: 100px">
         <div class="row h-100 align-items-center">
           <div class="col-2 h-100 text-center">
-            <img class="py-3 h-100" src="@/assets/ghibli-info-rental.png" alt="logo" />
+            <img class="py-3 h-100" src="@/assets/img/ghibli-info-rental.png" alt="logo" />
           </div>
           <div class="col-10">
             <div class="row justify-content-end">
